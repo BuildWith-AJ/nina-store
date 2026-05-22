@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEPD — Checkout</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#534AB7',
+            'brand-light': '#EAE8FF',
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body bg-gray-50 text-gray-900">
+
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-white border-b-2 border-brand px-5 md:px-10 lg:px-16 h-16 flex items-center justify-between">
+
+    <a href="index.html" class="font-display text-3xl text-brand tracking-wide">STEPD</a>
+
+    <ul class="hidden md:flex gap-8 list-none">
+      <li><a href="index.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Home</a></li>
+      <li><a href="about.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">About</a></li>
+      <li><a href="products.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Products</a></li>
+      <li><a href="checkout.html" class="text-sm font-semibold text-brand border-b-2 border-brand pb-0.5">Checkout</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <button
+        onclick="window.location.href='checkout.html'"
+        class="flex items-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2 rounded hover:bg-purple-800 transition-colors">
+        🛒
+        <span class="hidden sm:inline">Cart</span>
+        <span id="cart-count" class="bg-white text-brand text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <button onclick="Checkout.toggleMenu()" class="md:hidden flex flex-col gap-1.5 p-1">
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-5 py-4 flex flex-col gap-4">
+    <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Home</a>
+    <a href="about.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">About</a>
+    <a href="products.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Products</a>
+    <a href="checkout.html" class="text-sm font-semibold text-brand">Checkout</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PAGE HEADER
+  ══════════════════════════════════════ -->
+  <div class="px-5 md:px-10 lg:px-16 pt-10 pb-6 bg-gray-50">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand mb-2">Final Step</p>
+    <h1 class="font-display text-5xl md:text-6xl text-gray-900 mb-1">Checkout</h1>
+    <p class="text-sm text-gray-400">Fill in your details and complete your order securely</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       EMPTY CART STATE
+  ══════════════════════════════════════ -->
+  <div id="empty-cart" class="hidden px-5 md:px-10 lg:px-16 py-24 flex flex-col items-center justify-center text-center">
+    <span class="text-8xl mb-6">🛒</span>
+    <h2 class="font-display text-4xl text-gray-900 mb-3">Your cart is empty</h2>
+    <p class="text-sm text-gray-400 mb-8">Looks like you haven't added anything yet. Go find your perfect pair!</p>
+    <a href="products.html" class="bg-brand text-white text-sm font-bold px-8 py-3.5 rounded hover:bg-purple-800 transition-colors">
+      Shop Now →
+    </a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       CHECKOUT LAYOUT
+  ══════════════════════════════════════ -->
+  <div id="checkout-layout" class="px-5 md:px-10 lg:px-16 pb-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+
+    <!-- ════════════════════════════
+         LEFT: CUSTOMER DETAILS FORM
+    ════════════════════════════ -->
+    <div class="lg:col-span-2 bg-white border border-gray-200 rounded-lg p-6 md:p-8">
+
+      <h2 class="font-display text-3xl text-gray-900 mb-6">Delivery Details</h2>
+
+      <!-- Name Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-bold uppercase tracking-wider text-gray-500">First Name *</label>
+          <input
+            id="first-name"
+            type="text"
+            placeholder="Amara"
+            class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-bold uppercase tracking-wider text-gray-500">Last Name *</label>
+          <input
+            id="last-name"
+            type="text"
+            placeholder="Okonkwo"
+            class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-1.5 mb-4">
+        <label class="text-xs font-bold uppercase tracking-wider text-gray-500">Email Address *</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="amara@example.com"
+          class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+      </div>
+
+      <!-- Phone -->
+      <div class="flex flex-col gap-1.5 mb-4">
+        <label class="text-xs font-bold uppercase tracking-wider text-gray-500">Phone Number *</label>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="+234 801 234 5678"
+          class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+      </div>
+
+      <!-- Address -->
+      <div class="flex flex-col gap-1.5 mb-4">
+        <label class="text-xs font-bold uppercase tracking-wider text-gray-500">Delivery Address *</label>
+        <input
+          id="address"
+          type="text"
+          placeholder="14 Admiralty Way, Lekki Phase 1"
+          class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+      </div>
+
+      <!-- City + State -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-bold uppercase tracking-wider text-gray-500">City *</label>
+          <input
+            id="city"
+            type="text"
+            placeholder="Lagos"
+            class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-bold uppercase tracking-wider text-gray-500">State *</label>
+          <select
+            id="state"
+            class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors">
+            <option value="">Select state</option>
+            <option>Abia</option>
+            <option>Adamawa</option>
+            <option>Akwa Ibom</option>
+            <option>Anambra</option>
+            <option>Bauchi</option>
+            <option>Bayelsa</option>
+            <option>Benue</option>
+            <option>Borno</option>
+            <option>Cross River</option>
+            <option>Delta</option>
+            <option>Ebonyi</option>
+            <option>Edo</option>
+            <option>Ekiti</option>
+            <option>Enugu</option>
+            <option>FCT - Abuja</option>
+            <option>Gombe</option>
+            <option>Imo</option>
+            <option>Jigawa</option>
+            <option>Kaduna</option>
+            <option>Kano</option>
+            <option>Katsina</option>
+            <option>Kebbi</option>
+            <option>Kogi</option>
+            <option>Kwara</option>
+            <option selected>Lagos</option>
+            <option>Nasarawa</option>
+            <option>Niger</option>
+            <option>Ogun</option>
+            <option>Ondo</option>
+            <option>Osun</option>
+            <option>Oyo</option>
+            <option>Plateau</option>
+            <option>Rivers</option>
+            <option>Sokoto</option>
+            <option>Taraba</option>
+            <option>Yobe</option>
+            <option>Zamfara</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Order Notes -->
+      <div class="flex flex-col gap-1.5 mb-2">
+        <label class="text-xs font-bold uppercase tracking-wider text-gray-500">Order Notes <span class="normal-case font-normal text-gray-400">(optional)</span></label>
+        <textarea
+          id="notes"
+          rows="3"
+          placeholder="E.g. Please call before delivery, leave at the gate..."
+          class="border border-gray-200 rounded px-3 py-2.5 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-brand transition-colors resize-none"></textarea>
+      </div>
+
+      <!-- Error message -->
+      <p id="form-error" class="hidden text-xs font-semibold text-red-500 mt-3">
+        ⚠ Please fill in all required fields before paying.
+      </p>
+
+    </div>
+
+
+    <!-- ════════════════════════════
+         RIGHT: ORDER SUMMARY
+    ════════════════════════════ -->
+    <div class="bg-white border border-gray-200 rounded-lg p-6 sticky top-24">
+
+      <h2 class="font-display text-3xl text-gray-900 mb-5">Order Summary</h2>
+
+      <!-- Cart Items List -->
+      <div id="order-items" class="flex flex-col gap-4 mb-5">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-gray-100 pt-4 flex flex-col gap-2 mb-2">
+        <div class="flex justify-between text-sm text-gray-500">
+          <span>Subtotal</span>
+          <span id="subtotal">₦0</span>
+        </div>
+        <div class="flex justify-between text-sm text-gray-500">
+          <span>Delivery</span>
+          <span id="delivery-fee" class="text-green-600 font-semibold">Free</span>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="flex justify-between items-center border-t-2 border-brand pt-4 mt-2 mb-6">
+        <span class="text-base font-bold text-gray-900">Total</span>
+        <span id="total-amount" class="text-xl font-black text-brand">₦0</span>
+      </div>
+
+      <!-- Pay Button -->
+      <button
+        id="pay-btn"
+        onclick="Checkout.pay()"
+        class="w-full bg-brand text-white font-black text-base py-4 rounded hover:bg-purple-800 transition-colors flex items-center justify-center gap-2">
+        🔒 Pay with Paystack
+      </button>
+
+      <p class="text-center text-xs text-gray-400 mt-3">
+        Secured by Paystack · SSL Encrypted
+      </p>
+
+      <!-- Clear Cart -->
+      <button
+        onclick="Checkout.clearCart()"
+        class="w-full mt-4 text-xs font-semibold text-gray-400 hover:text-red-500 transition-colors underline underline-offset-2">
+        Clear cart
+      </button>
+
+    </div>
+
+
+  </div><!-- /checkout-layout -->
+
+
+  <!-- ══════════════════════════════════════
+       SUCCESS MODAL
+  ══════════════════════════════════════ -->
+  <div id="success-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-5">
+    <div class="bg-white rounded-xl p-8 max-w-md w-full text-center">
+      <div class="text-6xl mb-4">🎉</div>
+      <h2 class="font-display text-4xl text-gray-900 mb-2">Order Placed!</h2>
+      <p class="text-sm text-gray-500 mb-2">Thank you for your order.</p>
+      <p id="success-name" class="text-base font-bold text-gray-900 mb-1"></p>
+      <p id="success-ref" class="text-xs text-gray-400 mb-6"></p>
+      <p class="text-sm text-gray-500 mb-6">
+        A confirmation has been sent to your email. We'll reach out with delivery details shortly.
+      </p>
+      <a href="products.html"
+        class="inline-block bg-brand text-white text-sm font-bold px-8 py-3.5 rounded hover:bg-purple-800 transition-colors">
+        Continue Shopping
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="bg-gray-900 px-5 md:px-10 lg:px-20 py-7 flex flex-col md:flex-row items-center justify-between gap-4">
+    <span class="font-display text-2xl text-brand">STEPD</span>
+    <ul class="flex gap-5 list-none flex-wrap justify-center">
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Privacy</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Terms</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">FAQ</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Contact</a></li>
+    </ul>
+    <p class="text-xs text-gray-600 text-center">© 2025 Stepd. All rights reserved.</p>
+  </footer>
+
+
+  <script src="main.js"></script>
+
+</body>
+</html>
