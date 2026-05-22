@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nin@ — Our Story</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#534AB7',
+            'brand-light': '#EAE8FF',
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body bg-gray-50 text-gray-900">
+
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-white border-b-2 border-brand px-5 md:px-10 lg:px-16 h-16 flex items-center justify-between">
+
+    <a href="index.html" class="font-display text-3xl text-brand tracking-wide">Nin@</a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="hidden md:flex gap-8 list-none">
+      <li><a href="index.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Home</a></li>
+      <li><a href="about.html" class="text-sm font-semibold text-brand border-b-2 border-brand pb-0.5">About</a></li>
+      <li><a href="products.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Products</a></li>
+      <li><a href="checkout.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Checkout</a></li>
+    </ul>
+
+    <!-- Right: Cart + Hamburger -->
+    <div class="flex items-center gap-3">
+
+      <button
+        onclick="window.location.href='checkout.html'"
+        class="flex items-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2 rounded hover:bg-purple-800 transition-colors">
+        🛒
+        <span class="hidden sm:inline">Cart</span>
+        <span id="cart-count" class="bg-white text-brand text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <!-- Hamburger -->
+      <button onclick="toggleMenu()" class="md:hidden flex flex-col gap-1.5 p-1">
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-5 py-4 flex flex-col gap-4">
+    <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Home</a>
+    <a href="about.html" class="text-sm font-semibold text-brand">About</a>
+    <a href="products.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Products</a>
+    <a href="checkout.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Checkout</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       BRAND STORY HERO
+  ══════════════════════════════════════ -->
+  <section class="bg-brand px-5 md:px-10 lg:px-20 py-16 md:py-20 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+
+    <!-- Left: Text -->
+    <div class="flex-1 text-center md:text-left">
+
+      <p class="text-xs font-bold tracking-widest uppercase text-purple-300 mb-4">
+        Our Story
+      </p>
+
+      <h1 class="font-display text-6xl sm:text-7xl lg:text-8xl leading-none text-white mb-6">
+        Born on the<br>
+        <span class="text-purple-300">Streets</span><br>
+        of Lagos.
+      </h1>
+
+      <p class="text-sm text-purple-100 leading-relaxed mb-4 max-w-md mx-auto md:mx-0">
+        Nin@ started in 2021 from a single belief — great shoes shouldn't cost a fortune.
+        We source only the finest materials, work with skilled artisans, and deliver
+        straight to your door.
+      </p>
+
+      <p class="text-sm text-purple-100 leading-relaxed max-w-md mx-auto md:mx-0">
+        Every pair is designed to move with you — from your morning commute to your
+        midnight out. We're not just selling shoes, we're building a movement.
+        One step at a time.
+      </p>
+
+    </div>
+
+    <!-- Right: Image Box -->
+    <div class="w-full md:w-80 lg:w-96 flex-shrink-0 bg-white/10 rounded-2xl flex flex-col items-center justify-center py-12 px-6">
+      <!--
+        REPLACE WITH YOUR IMAGE:
+        <img src="assets/about-brand.jpg" alt="Our Story" class="w-full h-full object-cover rounded-2xl" />
+      -->
+      <span class="text-8xl md:text-9xl">👟</span>
+      <p class="text-purple-300 text-xs font-semibold mt-4 text-center">
+        Replace with your brand image
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       STATS BAR
+  ══════════════════════════════════════ -->
+  <div class="bg-brand-light px-5 md:px-10 lg:px-20 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+
+    <div class="text-center">
+      <p class="font-display text-5xl text-brand">2021</p>
+      <p class="text-xs font-semibold text-gray-500 mt-1">Year Founded</p>
+    </div>
+
+    <div class="text-center">
+      <p class="font-display text-5xl text-brand">5K+</p>
+      <p class="text-xs font-semibold text-gray-500 mt-1">Happy Customers</p>
+    </div>
+
+    <div class="text-center">
+      <p class="font-display text-5xl text-brand">30+</p>
+      <p class="text-xs font-semibold text-gray-500 mt-1">Shoe Styles</p>
+    </div>
+
+    <div class="text-center">
+      <p class="font-display text-5xl text-brand">6</p>
+      <p class="text-xs font-semibold text-gray-500 mt-1">States We Deliver To</p>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       VALUES SECTION — 2x2 GRID
+  ══════════════════════════════════════ -->
+  <section class="px-5 md:px-10 lg:px-20 py-14 md:py-20 bg-gray-50">
+
+    <p class="text-xs font-bold tracking-widest uppercase text-brand mb-2 text-center md:text-left">
+      What We Stand For
+    </p>
+    <h2 class="font-display text-4xl md:text-5xl text-gray-900 mb-1 text-center md:text-left">
+      Our Values
+    </h2>
+    <p class="text-sm text-gray-400 mb-10 text-center md:text-left">
+      The principles that drive every design decision we make
+    </p>
+
+    <!-- 2x2 Grid: 1 col mobile → 2 col tablet and up -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+      <!-- Card 1 -->
+      <div class="bg-white border border-gray-200 rounded-lg p-7 hover:border-brand transition-colors">
+        <span class="text-4xl mb-4 block">🏆</span>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Uncompromising Quality</h3>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          Every shoe goes through a 12-point quality check before it ever reaches your door.
+          We don't cut corners — period. If it doesn't meet our standard, it doesn't ship.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white border border-gray-200 rounded-lg p-7 hover:border-brand transition-colors">
+        <span class="text-4xl mb-4 block">🌍</span>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Made for Africa</h3>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          Designed for the Nigerian climate, sized for African feet, and priced for the
+          everyday person who deserves to look and feel exceptional every single day.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white border border-gray-200 rounded-lg p-7 hover:border-brand transition-colors">
+        <span class="text-4xl mb-4 block">♻️</span>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Sustainable Sourcing</h3>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          We partner with suppliers who share our commitment to responsible production.
+          Good for your feet, good for the people who make them, good for the planet.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white border border-gray-200 rounded-lg p-7 hover:border-brand transition-colors">
+        <span class="text-4xl mb-4 block">💜</span>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Community First</h3>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          A portion of every sale supports youth skill programs across Lagos.
+          When you shop Nin@, you're investing in the next generation of entrepreneurs.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       MEET THE TEAM (optional — remove if not needed)
+  ══════════════════════════════════════ -->
+  <section class="px-5 md:px-10 lg:px-20 py-14 bg-white border-t border-gray-100">
+
+    <p class="text-xs font-bold tracking-widest uppercase text-brand mb-2 text-center md:text-left">
+      The Person Behind Nin@
+    </p>
+    <h2 class="font-display text-4xl md:text-5xl text-gray-900 mb-1 text-center md:text-left">
+      Meet the Founder
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Team Member 1 -->
+      <div class="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden hover:border-brand transition-colors">
+        <div class="h-48 bg-brand-light flex items-center justify-center text-7xl">
+          <!--
+            REPLACE WITH PHOTO:
+            <img src="assets/team-1.jpg" alt="Founder" class="w-full h-full object-cover" />
+          -->
+          👤
+        </div>
+        <div class="p-5">
+          <p class="text-base font-bold text-gray-900">Nin@ WhatsApp</p>
+          <p class="text-xs font-semibold text-brand mt-0.5 mb-2">Founder & CEO</p>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Passionate about footwear, design, and building brands that mean something.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       CONTACT STRIP
+  ══════════════════════════════════════ -->
+  <section class="bg-brand px-5 md:px-10 lg:px-20 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+
+    <div class="text-center md:text-left">
+      <h3 class="font-display text-4xl md:text-5xl text-white">Got a question?</h3>
+      <p class="text-sm text-purple-200 mt-1">
+        Reach us at <span class="text-white font-semibold">hello@nina.ng</span> · Mon–Fri, 9am–6pm WAT
+      </p>
+    </div>
+
+    <a href="mailto:hello@nina.ng"
+      class="flex-shrink-0 bg-white text-brand text-sm font-black px-8 py-3.5 rounded hover:bg-brand-light transition-colors">
+      Send a Message
+    </a>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="bg-gray-900 px-5 md:px-10 lg:px-20 py-7 flex flex-col md:flex-row items-center justify-between gap-4">
+
+    <span class="font-display text-2xl text-brand">Nin@</span>
+
+    <ul class="flex gap-5 list-none flex-wrap justify-center">
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Privacy</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Terms</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">FAQ</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Contact</a></li>
+    </ul>
+
+    <p class="text-xs text-gray-600 text-center">© 2025 Nin@. All rights reserved.</p>
+
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script src="main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nin@ — Walk Bold</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#534AB7',
+            'brand-light': '#EAE8FF',
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body bg-gray-50 text-gray-900">
+
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-white border-b-2 border-brand px-5 md:px-10 lg:px-16 h-16 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="index.html" class="font-display text-3xl text-brand tracking-wide">Nin@</a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="hidden md:flex gap-8 list-none">
+      <li><a href="index.html" class="text-sm font-semibold text-brand border-b-2 border-brand pb-0.5">Home</a></li>
+      <li><a href="about.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">About</a></li>
+      <li><a href="products.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Products</a></li>
+      <li><a href="checkout.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Checkout</a></li>
+    </ul>
+
+    <!-- Right: Cart + Mobile Menu Button -->
+    <div class="flex items-center gap-3">
+
+      <button
+        onclick="window.location.href='checkout.html'"
+        class="flex items-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2 rounded hover:bg-purple-800 transition-colors">
+        🛒
+        <span class="hidden sm:inline">Cart</span>
+        <span id="cart-count" class="bg-white text-brand text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="menu-btn" onclick="toggleMenu()" class="md:hidden flex flex-col gap-1.5 p-1">
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-5 py-4 flex flex-col gap-4">
+    <a href="index.html" class="text-sm font-semibold text-brand">Home</a>
+    <a href="about.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">About</a>
+    <a href="products.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Products</a>
+    <a href="checkout.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Checkout</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       HERO BANNER
+  ══════════════════════════════════════ -->
+  <section class="bg-brand px-5 md:px-10 lg:px-20 pt-12 md:pt-16 overflow-hidden flex flex-col md:flex-row items-center md:items-end justify-between gap-8">
+
+    <!-- Left: Text -->
+    <div class="max-w-lg pb-0 md:pb-16 text-center md:text-left">
+
+      <p class="text-xs font-bold tracking-widest uppercase text-purple-300 mb-4">
+        New Arrivals · 2026
+      </p>
+
+      <h1 class="font-display text-7xl sm:text-8xl lg:text-9xl leading-none text-white mb-5">
+        Walk in<br>
+        <span class="text-purple-300">Bold</span><br>
+        Style.
+      </h1>
+
+      <p class="text-sm text-purple-100 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
+        Premium footwear crafted for the streets and the stage.
+        Every pair tells a story — make it yours.
+      </p>
+
+      <div class="flex gap-4 justify-center md:justify-start flex-wrap">
+        <a href="products.html"
+          class="bg-white text-brand text-sm font-black px-7 py-3.5 rounded hover:bg-brand-light transition-colors">
+          Shop Now
+        </a>
+        <a href="about.html"
+          class="border-2 border-purple-400 text-white text-sm font-bold px-7 py-3.5 rounded hover:border-white transition-colors">
+          Our Story
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Right: Shoe Image -->
+    <div class="w-full md:w-72 lg:w-80 flex-shrink-0 flex flex-col items-center justify-end bg-white/10 rounded-t-2xl pt-8">
+      <!--
+        REPLACE WITH YOUR IMAGE:
+        <img src="assets/hero-shoe.png" alt="Featured shoe" class="w-full object-contain" />
+      -->
+      <span class="text-8xl md:text-9xl">👟</span>
+      <p class="text-purple-300 text-xs font-semibold mt-2 mb-4 text-center px-4">
+        Replace with your shoe image
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       TRUST BAR
+  ══════════════════════════════════════ -->
+  <div class="bg-gray-900 px-5 md:px-10 lg:px-16 py-5 grid grid-cols-2 md:grid-cols-4 gap-5">
+
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🚚</span>
+      <div>
+        <strong class="block text-white text-xs sm:text-sm font-bold">Free Delivery</strong>
+        <span class="text-gray-400 text-xs">On orders above ₦20,000</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🔄</span>
+      <div>
+        <strong class="block text-white text-xs sm:text-sm font-bold">Easy Returns</strong>
+        <span class="text-gray-400 text-xs">7-day hassle-free returns</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🔒</span>
+      <div>
+        <strong class="block text-white text-xs sm:text-sm font-bold">Secure Payment</strong>
+        <span class="text-gray-400 text-xs">Powered by Paystack</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">💬</span>
+      <div>
+        <strong class="block text-white text-xs sm:text-sm font-bold">24/7 Support</strong>
+        <span class="text-gray-400 text-xs">We're always here for you</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       FEATURED PRODUCTS
+  ══════════════════════════════════════ -->
+  <section class="px-5 md:px-10 lg:px-20 py-12 md:py-16 bg-gray-50">
+
+    <p class="text-xs font-bold tracking-widest uppercase text-brand mb-2">Handpicked for You</p>
+    <h2 class="font-display text-4xl md:text-5xl text-gray-900 mb-1">Featured Products</h2>
+    <p class="text-sm text-gray-400 mb-8 md:mb-10">Our most-loved styles this season</p>
+
+    <!-- Grid: 1 col mobile → 2 col tablet → 3 col desktop -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+      <!-- ── CARD 1: Air Stride Pro ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors">
+
+        <div class="h-48 bg-brand-light flex items-center justify-center text-7xl border-b border-gray-100 relative">
+          <!--
+            REPLACE WITH IMAGE:
+            <img src="assets/air-stride-pro.jpg" alt="Air Stride Pro" class="w-full h-full object-cover" />
+          -->
+          👟
+          <span class="absolute top-3 left-3 bg-brand text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">New</span>
+        </div>
+
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-base font-bold text-gray-900 mb-1">Air Stride Pro</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-1">
+            Lightweight everyday runner with memory foam insole and breathable mesh upper.
+          </p>
+
+          <!-- Sizes -->
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between mt-auto">
+            <div>
+              <p class="text-lg font-black text-brand">₦32,000</p>
+              <div class="flex gap-1.5 mt-1.5">
+                <button onclick="selectSwatch(this)" title="Black" class="swatch w-4 h-4 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all"></button>
+                <button onclick="selectSwatch(this)" title="White" class="swatch w-4 h-4 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all"></button>
+                <button onclick="selectSwatch(this)" title="Purple" class="swatch w-4 h-4 rounded-full bg-brand ring-offset-1 transition-all"></button>
+              </div>
+            </div>
+            <button
+              class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors"
+              data-id="air-stride-pro"
+              data-name="Air Stride Pro"
+              data-price="32000"
+              onclick="addToCart(this)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── CARD 2: Dusk Loafer ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors">
+
+        <div class="h-48 bg-brand-light flex items-center justify-center text-7xl border-b border-gray-100">
+          <!--
+            REPLACE WITH IMAGE:
+            <img src="assets/dusk-loafer.jpg" alt="Dusk Loafer" class="w-full h-full object-cover" />
+          -->
+          🥿
+        </div>
+
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-base font-bold text-gray-900 mb-1">Dusk Loafer</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-1">
+            Classic slip-on with genuine leather upper and hand-stitched welt detailing.
+          </p>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-auto">
+            <div>
+              <p class="text-lg font-black text-brand">₦27,500</p>
+              <div class="flex gap-1.5 mt-1.5">
+                <button onclick="selectSwatch(this)" title="Brown" class="swatch w-4 h-4 rounded-full ring-2 ring-brand ring-offset-1 transition-all" style="background:#8B4513"></button>
+                <button onclick="selectSwatch(this)" title="Black" class="swatch w-4 h-4 rounded-full bg-gray-900 ring-offset-1 transition-all"></button>
+              </div>
+            </div>
+            <button
+              class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors"
+              data-id="dusk-loafer"
+              data-name="Dusk Loafer"
+              data-price="27500"
+              onclick="addToCart(this)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── CARD 3: Apex Heel ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors">
+
+        <div class="h-48 bg-brand-light flex items-center justify-center text-7xl border-b border-gray-100 relative">
+          <!--
+            REPLACE WITH IMAGE:
+            <img src="assets/apex-heel.jpg" alt="Apex Heel" class="w-full h-full object-cover" />
+          -->
+          👠
+          <span class="absolute top-3 left-3 bg-gray-900 text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">Hot</span>
+        </div>
+
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-base font-bold text-gray-900 mb-1">Apex Heel</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4 flex-1">
+            Statement block heel with padded ankle strap and non-slip rubber outsole.
+          </p>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-auto">
+            <div>
+              <p class="text-lg font-black text-brand">₦41,000</p>
+              <div class="flex gap-1.5 mt-1.5">
+                <button onclick="selectSwatch(this)" title="Red" class="swatch w-4 h-4 rounded-full ring-2 ring-brand ring-offset-1 transition-all" style="background:#c0392b"></button>
+                <button onclick="selectSwatch(this)" title="Black" class="swatch w-4 h-4 rounded-full bg-gray-900 ring-offset-1 transition-all"></button>
+                <button onclick="selectSwatch(this)" title="Gold" class="swatch w-4 h-4 rounded-full ring-offset-1 transition-all" style="background:#d4af37"></button>
+              </div>
+            </div>
+            <button
+              class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors"
+              data-id="apex-heel"
+              data-name="Apex Heel"
+              data-price="41000"
+              onclick="addToCart(this)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div><!-- /grid -->
+
+    <!-- View All -->
+    <div class="text-center mt-10 md:mt-12">
+      <a href="products.html"
+        class="inline-block border-2 border-brand text-brand text-sm font-bold px-10 py-3.5 rounded hover:bg-brand hover:text-white transition-colors">
+        View All Products →
+      </a>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="bg-gray-900 px-5 md:px-10 lg:px-20 py-7 flex flex-col md:flex-row items-center justify-between gap-4">
+
+    <span class="font-display text-2xl text-brand">Nin@</span>
+
+    <ul class="flex gap-5 list-none flex-wrap justify-center">
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Privacy</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Terms</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">FAQ</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Contact</a></li>
+    </ul>
+
+    <p class="text-xs text-gray-600 text-center">© 2025 Nin@. All rights reserved.</p>
+
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       CART TOAST
+  ══════════════════════════════════════ -->
+  <div id="cart-toast"
+    class="fixed bottom-6 right-5 z-50 bg-gray-900 text-white text-sm font-semibold px-5 py-3.5 rounded-lg border-l-4 border-brand opacity-0 translate-y-2 transition-all duration-300 pointer-events-none">
+    ✓ Added to cart
+  </div>
+
+
+  <script src="main.js"></script>
+
+</body>
+</html>

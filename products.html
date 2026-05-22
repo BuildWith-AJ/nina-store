@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nin@ — Products</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#534AB7',
+            'brand-light': '#EAE8FF',
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body bg-gray-50 text-gray-900">
+
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-white border-b-2 border-brand px-5 md:px-10 lg:px-16 h-16 flex items-center justify-between">
+
+    <a href="index.html" class="font-display text-3xl text-brand tracking-wide">Nin@</a>
+
+    <ul class="hidden md:flex gap-8 list-none">
+      <li><a href="index.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Home</a></li>
+      <li><a href="about.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">About</a></li>
+      <li><a href="products.html" class="text-sm font-semibold text-brand border-b-2 border-brand pb-0.5">Products</a></li>
+      <li><a href="checkout.html" class="text-sm font-semibold text-gray-500 hover:text-brand transition-colors">Checkout</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <button
+        onclick="window.location.href='checkout.html'"
+        class="flex items-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2 rounded hover:bg-purple-800 transition-colors">
+        🛒
+        <span class="hidden sm:inline">Cart</span>
+        <span id="cart-count" class="bg-white text-brand text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <button onclick="Products.toggleMenu()" class="md:hidden flex flex-col gap-1.5 p-1">
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+        <span class="block w-6 h-0.5 bg-gray-700"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-5 py-4 flex flex-col gap-4">
+    <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Home</a>
+    <a href="about.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">About</a>
+    <a href="products.html" class="text-sm font-semibold text-brand">Products</a>
+    <a href="checkout.html" class="text-sm font-semibold text-gray-600 hover:text-brand transition-colors">Checkout</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PAGE HEADER
+  ══════════════════════════════════════ -->
+  <div class="px-5 md:px-10 lg:px-16 pt-10 pb-6 bg-gray-50">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand mb-2">All Styles</p>
+    <h1 class="font-display text-5xl md:text-6xl text-gray-900 mb-1">Shop Our Collection</h1>
+    <p class="text-sm text-gray-400">Find your perfect pair — filter by category</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       CATEGORY FILTER CHIPS
+  ══════════════════════════════════════ -->
+  <div class="px-5 md:px-10 lg:px-16 pb-6 bg-gray-50 flex gap-2 flex-wrap">
+    <button onclick="Products.filterCategory(this, 'all')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-brand bg-brand text-white transition-colors">
+      All
+    </button>
+    <button onclick="Products.filterCategory(this, 'sneakers')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Sneakers
+    </button>
+    <button onclick="Products.filterCategory(this, 'loafers')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Loafers
+    </button>
+    <button onclick="Products.filterCategory(this, 'heels')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Heels
+    </button>
+    <button onclick="Products.filterCategory(this, 'boots')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Boots
+    </button>
+    <button onclick="Products.filterCategory(this, 'sandals')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Sandals
+    </button>
+    <button onclick="Products.filterCategory(this, 'flats')"
+      class="filter-chip px-5 py-2 rounded-full text-xs font-bold border-2 border-gray-200 bg-white text-gray-500 hover:border-brand hover:text-brand transition-colors">
+      Flats
+    </button>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PRODUCTS GRID
+  ══════════════════════════════════════ -->
+  <section class="px-5 md:px-10 lg:px-16 pb-16 bg-gray-50">
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+      <!--
+      ═══════════════════════════════════
+      HOW PRODUCT CARDS WORK:
+
+      Each card has:
+      - data-category="sneakers"  ← for filter chips
+      - data-id="unique-id"       ← unique product ID
+
+      Each COLOR VARIANT has:
+      - data-color="Black"        ← color name shown in cart
+      - data-img="assets/..."     ← image path for that color
+      - data-hex="#1a1a1a"        ← swatch dot color
+
+      When you click a color swatch:
+      → The main product image swaps to that color's image
+      → The swatch gets a purple ring
+      → Cart captures that color name + image
+
+      TO ADD YOUR REAL IMAGES:
+      Replace the emoji in .card-img-display with:
+        <img src="assets/your-shoe.jpg" class="w-full h-full object-cover" />
+      And set data-img="assets/your-shoe.jpg" on each variant button.
+      ═══════════════════════════════════
+      -->
+
+
+      <!-- ── 1. Air Stride Pro ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sneakers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👟</div>
+          <span class="absolute top-3 left-3 bg-brand text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">New</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Air Stride Pro</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Lightweight runner with memory foam insole and breathable mesh upper.</p>
+          <!-- Color Variants -->
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Purple" data-img="" data-hex="#534AB7" title="Purple" style="background:#534AB7"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Red" data-img="" data-hex="#c0392b" title="Red" style="background:#c0392b"></button>
+            </div>
+          </div>
+          <!-- Sizes -->
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦32,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="air-stride-pro" data-name="Air Stride Pro" data-price="32000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 2. Dusk Loafer ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="loafers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥿</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Dusk Loafer</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Classic slip-on with genuine leather upper and hand-stitched welt detailing.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Brown" data-img="" data-hex="#8B4513" title="Brown" style="background:#8B4513"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Tan" data-img="" data-hex="#D2B48C" title="Tan" style="background:#D2B48C"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦27,500</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="dusk-loafer" data-name="Dusk Loafer" data-price="27500">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 3. Apex Heel ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="heels">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👠</div>
+          <span class="absolute top-3 left-3 bg-gray-900 text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">Hot</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Apex Heel</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Statement block heel with padded ankle strap and non-slip rubber outsole.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Red" data-img="" data-hex="#c0392b" title="Red" style="background:#c0392b"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Gold" data-img="" data-hex="#d4af37" title="Gold" style="background:#d4af37"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Nude" data-img="" data-hex="#E8C9A0" title="Nude" style="background:#E8C9A0"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦41,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="apex-heel" data-name="Apex Heel" data-price="41000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 4. Terrain Boot ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="boots">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥾</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Terrain Boot</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Rugged ankle boot with waterproof finish and chunky rubber sole built for any surface.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Dark Brown" data-img="" data-hex="#3d2b1f" title="Dark Brown" style="background:#3d2b1f"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-600 ring-offset-1 transition-all" data-color="Grey" data-img="" data-hex="#6b7280" title="Grey"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">45</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦55,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="terrain-boot" data-name="Terrain Boot" data-price="55000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 5. Drift Sandal ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sandals">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🩴</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Drift Sandal</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Open-toe sandal with adjustable velcro straps and contoured cork footbed.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Sand" data-img="" data-hex="#D2B48C" title="Sand" style="background:#D2B48C"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦18,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="drift-sandal" data-name="Drift Sandal" data-price="18000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 6. Court Classic ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sneakers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👟</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Court Classic</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Vintage-inspired low-top with vulcanised sole and canvas upper — timeless style.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-2 ring-brand ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Navy" data-img="" data-hex="#1B2A6B" title="Navy" style="background:#1B2A6B"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦22,500</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="court-classic" data-name="Court Classic" data-price="22500">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 7. Velvet Mule ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="flats">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👡</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Velvet Mule</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Backless slip-on mule in premium velvet with cushioned insole — effortlessly chic.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Burgundy" data-img="" data-hex="#800020" title="Burgundy" style="background:#800020"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Emerald" data-img="" data-hex="#2ecc71" title="Emerald" style="background:#2ecc71"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Blush" data-img="" data-hex="#FFB6C1" title="Blush" style="background:#FFB6C1"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦24,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="velvet-mule" data-name="Velvet Mule" data-price="24000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 8. Lagos Runner ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sneakers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👟</div>
+          <span class="absolute top-3 left-3 bg-brand text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">Best Seller</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Lagos Runner</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">High-performance running shoe designed for Lagos roads — durable, light, grippy.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Orange" data-img="" data-hex="#e67e22" title="Orange" style="background:#e67e22"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Yellow" data-img="" data-hex="#f1c40f" title="Yellow" style="background:#f1c40f"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦38,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="lagos-runner" data-name="Lagos Runner" data-price="38000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 9. Chelsea Boot ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="boots">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥾</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Chelsea Boot</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Sleek elastic-sided Chelsea boot in smooth leather — perfect for any occasion.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Cognac" data-img="" data-hex="#9A4722" title="Cognac" style="background:#9A4722"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-600 ring-offset-1 transition-all" data-color="Grey" data-img="" data-hex="#6b7280" title="Grey"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦48,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="chelsea-boot" data-name="Chelsea Boot" data-price="48000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 10. Slide Pro ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sandals">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🩴</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Slide Pro</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Wide-strap recovery slide with EVA foam sole — post-workout or poolside ready.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Blue" data-img="" data-hex="#3498db" title="Blue" style="background:#3498db"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦12,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="slide-pro" data-name="Slide Pro" data-price="12000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 11. Kitten Heel ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="heels">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👠</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Kitten Heel</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Delicate low heel with pointed toe and satin finish — understated elegance.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Blush" data-img="" data-hex="#FFB6C1" title="Blush" style="background:#FFB6C1"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Silver" data-img="" data-hex="#C0C0C0" title="Silver" style="background:#C0C0C0"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Ivory" data-img="" data-hex="#FFFFF0" title="Ivory" style="background:#FFFFF0; border: 1px solid #ddd"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">36</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦29,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="kitten-heel" data-name="Kitten Heel" data-price="29000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 12. Penny Loafer ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="loafers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥿</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Penny Loafer</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Iconic penny loafer with leather sole and classic saddle strap — forever in style.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Burgundy" data-img="" data-hex="#800020" title="Burgundy" style="background:#800020"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Tan" data-img="" data-hex="#D2B48C" title="Tan" style="background:#D2B48C"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦31,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="penny-loafer" data-name="Penny Loafer" data-price="31000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 13. High Top Force ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sneakers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👟</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">High Top Force</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Bold high-top sneaker with padded ankle collar and thick cupsole — street-ready.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-2 ring-brand ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Red" data-img="" data-hex="#c0392b" title="Red" style="background:#c0392b"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Green" data-img="" data-hex="#27ae60" title="Green" style="background:#27ae60"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦44,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="high-top-force" data-name="High Top Force" data-price="44000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 14. Espadrille Flat ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="flats">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👡</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Espadrille Flat</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Woven jute-sole espadrille with canvas upper — lightweight and breezy all day.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Navy" data-img="" data-hex="#1B2A6B" title="Navy" style="background:#1B2A6B"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Stripe" data-img="" data-hex="#e74c3c" title="Red Stripe" style="background: repeating-linear-gradient(45deg, #fff, #fff 3px, #e74c3c 3px, #e74c3c 6px)"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Natural" data-img="" data-hex="#D2B48C" title="Natural" style="background:#D2B48C"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦16,500</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="espadrille-flat" data-name="Espadrille Flat" data-price="16500">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 15. Platform Clog ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="flats">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👡</div>
+          <span class="absolute top-3 left-3 bg-brand text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">New</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Platform Clog</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Chunky platform clog with adjustable back strap — bold, elevated, comfortable.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-white border border-gray-300 ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Pink" data-img="" data-hex="#FF69B4" title="Pink" style="background:#FF69B4"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Yellow" data-img="" data-hex="#f1c40f" title="Yellow" style="background:#f1c40f"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦19,500</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="platform-clog" data-name="Platform Clog" data-price="19500">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 16. Thong Sandal ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="sandals">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🩴</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Thong Sandal</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Minimalist leather thong sandal with flat sole — your everyday go-to in the sun.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Tan" data-img="" data-hex="#D2B48C" title="Tan" style="background:#D2B48C"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White" style="background:#ffffff; border: 1px solid #ddd"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">36</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦14,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="thong-sandal" data-name="Thong Sandal" data-price="14000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 17. Combat Boot ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="boots">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥾</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Combat Boot</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Lace-up combat boot with lug sole and zipper side entry — tough meets stylish.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Olive" data-img="" data-hex="#556B2F" title="Olive" style="background:#556B2F"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Brown" data-img="" data-hex="#8B4513" title="Brown" style="background:#8B4513"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦52,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="combat-boot" data-name="Combat Boot" data-price="52000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 18. Wedge Sandal ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="heels">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👠</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Wedge Sandal</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Cork wedge sandal with ankle tie and cushioned footbed — height without the pain.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-2 ring-brand ring-offset-1 transition-all" data-color="Natural" data-img="" data-hex="#D2B48C" title="Natural" style="background:#D2B48C"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="White" data-img="" data-hex="#ffffff" title="White" style="background:#ffffff; border:1px solid #ddd"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Coral" data-img="" data-hex="#FF6B6B" title="Coral" style="background:#FF6B6B"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦33,500</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="wedge-sandal" data-name="Wedge Sandal" data-price="33500">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 19. Monk Strap ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="loafers">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">🥿</div>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Monk Strap</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Double monk strap shoe in full-grain leather — the sharpest shoe in the room.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Cognac" data-img="" data-hex="#9A4722" title="Cognac" style="background:#9A4722"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Burgundy" data-img="" data-hex="#800020" title="Burgundy" style="background:#800020"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">41</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">42</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">43</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">44</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦46,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="monk-strap" data-name="Monk Strap" data-price="46000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── 20. Stiletto Point ── -->
+      <div class="product-card bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col hover:border-brand transition-colors" data-category="heels">
+        <div class="relative h-52 bg-brand-light border-b border-gray-100 flex items-center justify-center overflow-hidden">
+          <div class="card-img-display text-8xl">👠</div>
+          <span class="absolute top-3 left-3 bg-gray-900 text-white text-xs font-black px-2.5 py-1 rounded uppercase tracking-wide">Hot</span>
+        </div>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-sm font-bold text-gray-900 mb-1">Stiletto Point</p>
+          <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">Sharp pointed-toe stiletto with suede finish and slim heel — made for the bold.</p>
+          <div class="mb-3">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Color</p>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full bg-gray-900 ring-2 ring-brand ring-offset-1 transition-all" data-color="Black" data-img="" data-hex="#1a1a1a" title="Black"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Red" data-img="" data-hex="#c0392b" title="Red" style="background:#c0392b"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Nude" data-img="" data-hex="#E8C9A0" title="Nude" style="background:#E8C9A0"></button>
+              <button onclick="Products.selectColor(this)" class="color-btn w-6 h-6 rounded-full ring-offset-1 transition-all" data-color="Silver" data-img="" data-hex="#C0C0C0" title="Silver" style="background:#C0C0C0"></button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Size (EU)</p>
+            <div class="flex gap-1.5 flex-wrap">
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">36</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">37</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">38</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">39</button>
+              <button onclick="Products.selectSize(this)" class="size-btn px-2.5 py-1 border border-gray-200 rounded text-xs font-bold text-gray-500 hover:border-brand hover:text-brand transition-colors">40</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-auto">
+            <p class="text-lg font-black text-brand">₦58,000</p>
+            <button onclick="Products.addToCart(this)" class="bg-brand text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-purple-800 transition-colors" data-id="stiletto-point" data-name="Stiletto Point" data-price="58000">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div><!-- /products-grid -->
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="bg-gray-900 px-5 md:px-10 lg:px-20 py-7 flex flex-col md:flex-row items-center justify-between gap-4">
+    <span class="font-display text-2xl text-brand">Nin@</span>
+    <ul class="flex gap-5 list-none flex-wrap justify-center">
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Privacy</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Terms</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">FAQ</a></li>
+      <li><a href="#" class="text-xs text-gray-500 hover:text-white transition-colors">Contact</a></li>
+    </ul>
+    <p class="text-xs text-gray-600 text-center">© 2025 Nin@. All rights reserved.</p>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════
+       CART TOAST
+  ══════════════════════════════════════ -->
+  <div id="cart-toast"
+    class="fixed bottom-6 right-5 z-50 bg-gray-900 text-white text-sm font-semibold px-5 py-3.5 rounded-lg border-l-4 border-brand opacity-0 translate-y-2 transition-all duration-300 pointer-events-none">
+    ✓ Added to cart
+  </div>
+
+
+  <script src="main.js"></script>
+
+</body>
+</html>
